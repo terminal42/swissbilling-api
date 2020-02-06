@@ -1,0 +1,23 @@
+{
+    "name": "terminal42/swissbilling-api",
+    "description": "Client for the SwissBilling API",
+    "type": "library",
+    "keywords": ["swissbilling", "payment", "api"],
+    "homepage": "https://github.com/terminal42/swissbilling-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "terminal42 gmbh",
+            "homepage": "https://terminal42.ch"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "ext-soap": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Terminal42\\SwissbillingApi\\": "src/"
+        }
+    }
+}
