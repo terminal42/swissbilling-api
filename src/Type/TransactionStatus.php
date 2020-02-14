@@ -26,6 +26,7 @@ namespace Terminal42\SwissbillingApi\Type;
 class TransactionStatus extends AbstractType
 {
     public const STATUS_ANSWERED = 'Answered';
+    public const STATUS_ACKNOWLEDGED = 'Acknowledged';
     public const STATUS_MEMBERSHIP_VALIDATION = 'Membership validation';
     public const STATUS_PENDING_SHOP_CONFIRMATION = 'Pending shop confirmation';
 
@@ -39,5 +40,10 @@ class TransactionStatus extends AbstractType
     public function isAnswered()
     {
         return $this->status === self::STATUS_ANSWERED;
+    }
+
+    public function isAcknowledged()
+    {
+        return $this->status === self::STATUS_ACKNOWLEDGED;
     }
 }
