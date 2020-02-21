@@ -25,9 +25,20 @@ namespace Terminal42\SwissbillingApi\Type;
  */
 class TransactionStatus extends AbstractType
 {
+    public const STATUS_IN_PROCESS = 'In process';
+    public const STATUS_CANCELED_BY_USER = 'Canceled by user';
+    public const STATUS_FAILED = 'Failed';
     public const STATUS_ANSWERED = 'Answered';
-    public const STATUS_ACKNOWLEDGED = 'Acknowledged';
+    public const STATUS_TIMED_OUT = 'Timed Out';
+    public const STATUS_PROCESSED = 'Processed';
     public const STATUS_MEMBERSHIP_VALIDATION = 'Membership validation';
+    public const STATUS_TEST_APPROVED = 'Test approved';
+    public const STATUS_ACKNOWLEDGED = 'Acknowledged';
+    public const STATUS_CANCELED_BY_MERCHANT = 'Canceled by merchant';
+    public const STATUS_DELAYED_FOR_VALIDATION = 'Delayed for validation';
+    public const STATUS_PAYMENT_VALIDATION = 'Payment validation';
+    public const STATUS_TRANSACTION_CHECK_FAILURE = 'Transaction check failure';
+    public const STATUS_ADDRESS_VALIDATION = 'Address validation';
     public const STATUS_PENDING_SHOP_CONFIRMATION = 'Pending shop confirmation';
 
     public const ACTION_ERROR = 'Error';
