@@ -57,19 +57,15 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV2->EshopTransactionRequest(
-                $merchant ?: $this->merchant,
-                $transaction,
-                $debtor,
-                count($items),
-                array_map(function (InvoiceItem $item) {
-                    return (array) $item;
-                }, $items)
-            );
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV2);
-        }
+        return $this->apiV2->EshopTransactionRequest(
+            $merchant ?: $this->merchant,
+            $transaction,
+            $debtor,
+            count($items),
+            array_map(function (InvoiceItem $item) {
+                return (array) $item;
+            }, $items)
+        );
     }
 
     /**
@@ -81,15 +77,11 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV2->EshopTransactionConfirmation(
-                $merchant ?: $this->merchant,
-                $transaction_ref,
-                $order_timestamp
-            );
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV2);
-        }
+        return $this->apiV2->EshopTransactionConfirmation(
+            $merchant ?: $this->merchant,
+            $transaction_ref,
+            $order_timestamp
+        );
     }
 
     /**
@@ -123,17 +115,13 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV2->EshopTransactionDirect(
-                $merchant ?: $this->merchant,
-                $transaction,
-                $debtor,
-                count($items),
-                $items
-            );
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV2);
-        }
+        return $this->apiV2->EshopTransactionDirect(
+            $merchant ?: $this->merchant,
+            $transaction,
+            $debtor,
+            count($items),
+            $items
+        );
     }
 
     /**
@@ -145,16 +133,12 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV2->EshopTransactionCheck(
-                $merchant ?: $this->merchant,
-                $startdate,
-                $enddate,
-                $status
-            );
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV2);
-        }
+        return $this->apiV2->EshopTransactionCheck(
+            $merchant ?: $this->merchant,
+            $startdate,
+            $enddate,
+            $status
+        );
     }
 
     /**
@@ -166,15 +150,11 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EshopTransactionAcknowledge([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction_ref' => $transaction_ref,
-                'order_timestamp' => $order_timestamp,
-            ])->EshopTransactionAcknowledgeResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EshopTransactionAcknowledge([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction_ref' => $transaction_ref,
+            'order_timestamp' => $order_timestamp,
+        ])->EshopTransactionAcknowledgeResult;
     }
 
     /**
@@ -186,15 +166,11 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EshopTransactionCancel([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction_ref' => $transaction_ref,
-                'order_timestamp' => $order_timestamp,
-            ])->EshopTransactionCancelResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EshopTransactionCancel([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction_ref' => $transaction_ref,
+            'order_timestamp' => $order_timestamp,
+        ])->EshopTransactionCancelResult;
     }
 
     /**
@@ -206,15 +182,11 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EshopTransactionUnCancel([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction_ref' => $transaction_ref,
-                'order_timestamp' => $order_timestamp,
-            ])->EshopTransactionUnCancelResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EshopTransactionUnCancel([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction_ref' => $transaction_ref,
+            'order_timestamp' => $order_timestamp,
+        ])->EshopTransactionUnCancelResult;
     }
 
     /**
@@ -228,17 +200,13 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EshopTransactionPreScreening([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction' => $transaction,
-                'debtor' => $debtor,
-                'item_count' => count($items),
-                'items' => $items,
-            ])->EshopTransactionPreScreeningResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EshopTransactionPreScreening([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction' => $transaction,
+            'debtor' => $debtor,
+            'item_count' => count($items),
+            'items' => $items,
+        ])->EshopTransactionPreScreeningResult;
     }
 
     /**
@@ -250,18 +218,14 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EShopTransactionCreditNote([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction_ref' => $transaction_ref,
-                'order_timestamp' => $order_timestamp,
-                'amount' => $amount,
-                'transaction_ref_new' => $transaction_ref_new,
-                'notes' => $notes,
-            ])->EShopTransactionCreditNoteResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EShopTransactionCreditNote([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction_ref' => $transaction_ref,
+            'order_timestamp' => $order_timestamp,
+            'amount' => $amount,
+            'transaction_ref_new' => $transaction_ref_new,
+            'notes' => $notes,
+        ])->EShopTransactionCreditNoteResult;
     }
 
     /**
@@ -274,17 +238,13 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EShopTransactionUpdate([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction' => $transaction,
-                'debtor' => null,
-                'item_count' => count($items),
-                'items' => $items,
-            ])->EShopTransactionUpdateResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EShopTransactionUpdate([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction' => $transaction,
+            'debtor' => null,
+            'item_count' => count($items),
+            'items' => $items,
+        ])->EShopTransactionUpdateResult;
     }
 
     /**
@@ -296,16 +256,12 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        try {
-            return $this->apiV3->EShopTransactionGetInvoice([
-                'merchant' => $merchant ?: $this->merchant,
-                'transaction_ref' => $transaction_ref,
-                'order_timestamp' => $order_timestamp,
-                'ReportType' => $ReportType,
-            ])->EShopTransactionGetInvoiceResult;
-        } catch (\SoapFault $e) {
-            throw new SoapException($e, $this->apiV3);
-        }
+        return $this->apiV3->EShopTransactionGetInvoice([
+            'merchant' => $merchant ?: $this->merchant,
+            'transaction_ref' => $transaction_ref,
+            'order_timestamp' => $order_timestamp,
+            'ReportType' => $ReportType,
+        ])->EShopTransactionGetInvoiceResult;
     }
 
     /**

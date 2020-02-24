@@ -2,10 +2,14 @@
 
 namespace Terminal42\SwissbillingApi\Soap;
 
+use Terminal42\SwissbillingApi\Exception\SoapException;
 use Terminal42\SwissbillingApi\Type\AbstractType;
 
 abstract class Api extends \SoapClient
 {
+    /**
+     * @throws SoapException
+     */
     public function __call($function_name, $arguments)
     {
         foreach ($arguments as &$argument) {
@@ -14,7 +18,11 @@ abstract class Api extends \SoapClient
 
         unset($argument);
 
-        return parent::__call($function_name, $arguments);
+        try {
+            return parent::__call($function_name, $arguments);
+        } catch (\SoapFault $e) {
+            throw new SoapException($e, $this);
+        }
     }
 
     private function convertArgument(&$value)
