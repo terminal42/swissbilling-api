@@ -307,4 +307,12 @@ class Client
             throw new SoapException($e, $this->apiV3);
         }
     }
+
+    /**
+     * Returns the merchant that was passed to the constructor (if any).
+     */
+    public function getMerchant(): ?Merchant
+    {
+        return $this->merchant;
+    }
 }
