@@ -2,6 +2,7 @@
 
 namespace Terminal42\SwissbillingApi;
 
+use Terminal42\SwissbillingApi\Exception\SoapException;
 use Terminal42\SwissbillingApi\Soap\ApiV2;
 use Terminal42\SwissbillingApi\Soap\ApiV3;
 
@@ -18,18 +19,26 @@ class ApiFactory
     }
 
     /**
-     * @throws \SoapFault
+     * @throws SoapException
      */
     public function createV2(): ApiV2
     {
-        return new ApiV2($this->production);
+        try {
+            return new ApiV2($this->production);
+        } catch (\SoapFault $e) {
+            throw new SoapException($e);
+        }
     }
 
     /**
-     * @throws \SoapFault
+     * @throws SoapException
      */
     public function createV3(): ApiV3
     {
-        return new ApiV3($this->production);
+        try {
+            return new ApiV3($this->production);
+        } catch (\SoapFault $e) {
+            throw new SoapException($e);
+        }
     }
 }

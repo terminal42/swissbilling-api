@@ -25,7 +25,7 @@ abstract class Api extends \SoapClient
         }
     }
 
-    private function convertArgument(&$value)
+    private function convertArgument(&$value): void
     {
         switch (true) {
             /** @noinspection PhpMissingBreakStatementInspection */
