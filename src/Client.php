@@ -136,7 +136,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function acknowledge(string $transaction_ref, \DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function acknowledge(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -152,7 +152,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function cancel(string $transaction_ref, \DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function cancel(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -168,7 +168,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function unCancel(string $transaction_ref, \DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function unCancel(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -242,7 +242,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function getInvoice(string $transaction_ref, \DateTime $order_timestamp, string $ReportType, Merchant $merchant = null): InvoiceStatus
+    public function getInvoice(string $transaction_ref, DateTime $order_timestamp, string $ReportType, Merchant $merchant = null): InvoiceStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
