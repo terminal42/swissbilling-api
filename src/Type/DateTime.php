@@ -14,7 +14,12 @@ class DateTime
         $this->dateTime = $dateTime;
     }
 
-    public function __toString()
+    public function getTimestamp(): int
+    {
+        return $this->dateTime->format('U');
+    }
+
+    public function __toString(): string
     {
         return $this->dateTime->format('c');
     }

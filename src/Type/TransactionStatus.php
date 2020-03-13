@@ -43,17 +43,17 @@ class TransactionStatus extends AbstractType
 
     public const ACTION_ERROR = 'Error';
 
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->failure_code > 0;
     }
 
-    public function isAnswered()
+    public function isAnswered(): bool
     {
         return $this->status === self::STATUS_ANSWERED;
     }
 
-    public function isAcknowledged()
+    public function isAcknowledged(): bool
     {
         return $this->status === self::STATUS_ACKNOWLEDGED;
     }
