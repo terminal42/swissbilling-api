@@ -145,7 +145,7 @@ class Client
         return $this->getApiV3()->EshopTransactionAcknowledge([
             'merchant' => $merchant ?: $this->merchant,
             'transaction_ref' => $transaction_ref,
-            'order_timestamp' => $order_timestamp,
+            'timestamp' => $order_timestamp,
         ])->EshopTransactionAcknowledgeResult;
     }
 
@@ -161,7 +161,7 @@ class Client
         return $this->getApiV3()->EshopTransactionCancel([
             'merchant' => $merchant ?: $this->merchant,
             'transaction_ref' => $transaction_ref,
-            'order_timestamp' => $order_timestamp,
+            'timestamp' => $order_timestamp,
         ])->EshopTransactionCancelResult;
     }
 
@@ -177,7 +177,7 @@ class Client
         return $this->getApiV3()->EshopTransactionUnCancel([
             'merchant' => $merchant ?: $this->merchant,
             'transaction_ref' => $transaction_ref,
-            'order_timestamp' => $order_timestamp,
+            'timestamp' => $order_timestamp,
         ])->EshopTransactionUnCancelResult;
     }
 
@@ -213,7 +213,7 @@ class Client
         return $this->getApiV3()->EShopTransactionCreditNote([
             'merchant' => $merchant ?: $this->merchant,
             'transaction_ref' => $transaction_ref,
-            'order_timestamp' => $order_timestamp,
+            'timestamp' => $order_timestamp,
             'amount' => $amount,
             'transaction_ref_new' => $transaction_ref_new,
             'notes' => $notes,
