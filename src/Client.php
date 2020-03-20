@@ -142,11 +142,11 @@ class Client
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
         }
 
-        return $this->getApiV3()->EshopTransactionAcknowledge([
-            'merchant' => $merchant ?: $this->merchant,
-            'transaction_ref' => $transaction_ref,
-            'timestamp' => $order_timestamp,
-        ])->EshopTransactionAcknowledgeResult;
+        return $this->getApiV2()->EshopTransactionAcknowledge(
+            $merchant ?: $this->merchant,
+            $transaction_ref,
+            $order_timestamp
+        );
     }
 
     /**
