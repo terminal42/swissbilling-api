@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi\Exception;
 
 class SoapException extends \SoapFault
@@ -34,13 +36,9 @@ class SoapException extends \SoapFault
      */
     private $types;
 
-    /**
-     * @inheritDoc
-     */
-    public function __construct(\SoapFault $previous, \SoapClient $client = null)
+    public function __construct(\SoapFault $previous, \SoapClient|null $client = null)
     {
-        parent::__construct($previous->getMessage(), $previous->getCode(), $previous);
-        $this->SoapFault($previous->faultcode, $previous->faultstring, $previous->faultactor, $previous->detail, $previous->faultname, $previous->headerfault);
+        parent::__construct($previous->faultcode, $previous->faultstring, $previous->faultactor, $previous->detail, $previous->faultname, $previous->headerfault);
 
         if (null !== $client) {
             $this->lastRequest = $client->__getLastRequest();
@@ -52,32 +50,32 @@ class SoapException extends \SoapFault
         }
     }
 
-    public function getLastRequest(): ?string
+    public function getLastRequest(): string|null
     {
         return $this->lastRequest;
     }
 
-    public function getLastRequestHeaders(): ?string
+    public function getLastRequestHeaders(): string|null
     {
         return $this->lastRequestHeaders;
     }
 
-    public function getLastResponse(): ?string
+    public function getLastResponse(): string|null
     {
         return $this->lastResponse;
     }
 
-    public function getLastResponseHeaders(): ?string
+    public function getLastResponseHeaders(): string|null
     {
         return $this->lastResponseHeaders;
     }
 
-    public function getFunctions(): ?array
+    public function getFunctions(): array|null
     {
         return $this->functions;
     }
 
-    public function getTypes(): ?array
+    public function getTypes(): array|null
     {
         return $this->types;
     }

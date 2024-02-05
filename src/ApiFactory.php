@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi;
 
 use Terminal42\SwissbillingApi\Exception\SoapException;
@@ -8,14 +10,8 @@ use Terminal42\SwissbillingApi\Soap\ApiV3;
 
 class ApiFactory
 {
-    /**
-     * @var bool
-     */
-    private $production;
-
-    public function __construct(bool $production = true)
+    public function __construct(private readonly bool $production = true)
     {
-        $this->production = $production;
     }
 
     /**

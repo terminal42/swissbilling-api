@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi\Soap;
 
 use Terminal42\SwissbillingApi\Type\InvoiceStatus;

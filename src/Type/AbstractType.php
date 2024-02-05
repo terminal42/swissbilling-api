@@ -1,20 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi\Type;
 
+/**
+ * @extends \ArrayObject<string, mixed>
+ */
 abstract class AbstractType extends \ArrayObject
 {
-    public function __get(string $key)
+    public function __get(string $key): mixed
     {
         return $this->offsetGet($key);
     }
 
-    public function __set(string $key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->offsetSet($key, $value);
     }
 
-    public function __isset($key): bool
+    public function __isset(string $key): bool
     {
         return $this->offsetExists($key);
     }

@@ -1,19 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi\Type;
 
-class DateTime
+class DateTime implements \Stringable
 {
     private const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    /**
-     * @var \DateTime
-     */
-    private $dateTime;
-
-    public function __construct(\DateTime $dateTime)
+    public function __construct(private readonly \DateTime $dateTime)
     {
-        $this->dateTime = $dateTime;
     }
 
     public function __toString(): string
@@ -21,8 +17,8 @@ class DateTime
         return $this->dateTime->format(self::DATE_FORMAT);
     }
 
-    public static function create(string $time)
+    public static function create(string $time): self
     {
-        return new static(\DateTime::createFromFormat(self::DATE_FORMAT, $time));
+        return new self(\DateTime::createFromFormat(self::DATE_FORMAT, $time));
     }
 }

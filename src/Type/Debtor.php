@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi\Type;
 
 /**
@@ -17,7 +19,7 @@ namespace Terminal42\SwissbillingApi\Type;
  * @property string   $email              Email address of the customer
  * @property string   $phone              Phone. Format (+([0-9])*)
  * @property string   $language           Language of the customer. FR or DE in capitals
- * @property integer  $user_ID            Unique ID given by the shop
+ * @property int      $user_ID            Unique ID given by the shop
  * @property string   $deliv_company_name Deliver : Company name
  * @property string   $deliv_title        Deliver : title of customer
  * @property string   $deliv_firstname    Deliver : first name of customer
@@ -37,7 +39,7 @@ class Debtor extends AbstractType
             [
                 'SBMember_ID' => 0,
             ],
-            $input
+            $input,
         ));
     }
 }

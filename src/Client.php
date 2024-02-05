@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Terminal42\SwissbillingApi;
 
 use Terminal42\SwissbillingApi\Exception\SoapException;
@@ -17,16 +19,6 @@ use Terminal42\SwissbillingApi\Type\TransactionStatus;
 class Client
 {
     /**
-     * @var ApiFactory
-     */
-    private $apiFactory;
-
-    /**
-     * @var Merchant|null
-     */
-    private $merchant;
-
-    /**
      * @var ApiV2|null
      */
     private $apiV2;
@@ -36,18 +28,18 @@ class Client
      */
     private $apiV3;
 
-    public function __construct(ApiFactory $apiFactory, Merchant $merchant = null)
-    {
-        $this->apiFactory = $apiFactory;
-        $this->merchant = $merchant;
+    public function __construct(
+        private readonly ApiFactory $apiFactory,
+        private readonly Merchant|null $merchant = null,
+    ) {
     }
 
     /**
-     * @param InvoiceItem[] $items
+     * @param array<InvoiceItem> $items
      *
      * @throws SoapException
      */
-    public function request(Transaction $transaction, Debtor $debtor, array $items, Merchant $merchant = null): TransactionStatus
+    public function request(Transaction $transaction, Debtor $debtor, array $items, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -57,17 +49,15 @@ class Client
             $merchant ?: $this->merchant,
             $transaction,
             $debtor,
-            count($items),
-            array_map(static function (InvoiceItem $item) {
-                return (array) $item;
-            }, $items)
+            \count($items),
+            array_map(static fn (InvoiceItem $item) => (array) $item, $items),
         );
     }
 
     /**
      * @throws SoapException
      */
-    public function confirmation(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function confirmation(string $transaction_ref, DateTime $order_timestamp, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -76,14 +66,14 @@ class Client
         return $this->getApiV2()->EshopTransactionConfirmation(
             $merchant ?: $this->merchant,
             $transaction_ref,
-            $order_timestamp
+            $order_timestamp,
         );
     }
 
     /**
      * @throws SoapException
      */
-    public function statusRequest(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function statusRequest(string $transaction_ref, DateTime $order_timestamp, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -92,16 +82,16 @@ class Client
         return $this->getApiV2()->EshopTransactionStatusRequest(
             $merchant ?: $this->merchant,
             $transaction_ref,
-            $order_timestamp
+            $order_timestamp,
         );
     }
 
     /**
-     * @param InvoiceItem[] $items
+     * @param array<InvoiceItem> $items
      *
      * @throws SoapException
      */
-    public function direct(Transaction $transaction, Debtor $debtor, array $items, Merchant $merchant = null): TransactionStatus
+    public function direct(Transaction $transaction, Debtor $debtor, array $items, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -111,15 +101,15 @@ class Client
             $merchant ?: $this->merchant,
             $transaction,
             $debtor,
-            count($items),
-            $items
+            \count($items),
+            $items,
         );
     }
 
     /**
      * @throws SoapException
      */
-    public function check(DateTime $startdate, DateTime $enddate, string $status, Merchant $merchant = null): CheckResult
+    public function check(DateTime $startdate, DateTime $enddate, string $status, Merchant|null $merchant = null): CheckResult
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -129,14 +119,14 @@ class Client
             $merchant ?: $this->merchant,
             $startdate,
             $enddate,
-            $status
+            $status,
         );
     }
 
     /**
      * @throws SoapException
      */
-    public function acknowledge(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function acknowledge(string $transaction_ref, DateTime $order_timestamp, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -145,14 +135,14 @@ class Client
         return $this->getApiV2()->EshopTransactionAcknowledge(
             $merchant ?: $this->merchant,
             $transaction_ref,
-            $order_timestamp
+            $order_timestamp,
         );
     }
 
     /**
      * @throws SoapException
      */
-    public function cancel(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function cancel(string $transaction_ref, DateTime $order_timestamp, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -168,7 +158,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function unCancel(string $transaction_ref, DateTime $order_timestamp, Merchant $merchant = null): TransactionStatus
+    public function unCancel(string $transaction_ref, DateTime $order_timestamp, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -182,11 +172,11 @@ class Client
     }
 
     /**
-     * @param InvoiceItem[] $items
+     * @param array<InvoiceItem> $items
      *
      * @throws SoapException
      */
-    public function preScreening(Transaction $transaction, Debtor $debtor, array $items, Merchant $merchant = null): TransactionStatus
+    public function preScreening(Transaction $transaction, Debtor $debtor, array $items, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -196,7 +186,7 @@ class Client
             'merchant' => $merchant ?: $this->merchant,
             'transaction' => $transaction,
             'debtor' => $debtor,
-            'item_count' => count($items),
+            'item_count' => \count($items),
             'items' => $items,
         ])->EshopTransactionPreScreeningResult;
     }
@@ -204,7 +194,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function creditNote(string $transaction_ref, DateTime $order_timestamp, float $amount, string $transaction_ref_new, string $notes, Merchant $merchant = null): TransactionStatus
+    public function creditNote(string $transaction_ref, DateTime $order_timestamp, float $amount, string $transaction_ref_new, string $notes, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -221,10 +211,11 @@ class Client
     }
 
     /**
-     * @param InvoiceItem[] $items
+     * @param array<InvoiceItem> $items
+     *
      * @throws SoapException
      */
-    public function update(Transaction $transaction, array $items, Merchant $merchant = null): TransactionStatus
+    public function update(Transaction $transaction, array $items, Merchant|null $merchant = null): TransactionStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -234,7 +225,7 @@ class Client
             'merchant' => $merchant ?: $this->merchant,
             'transaction' => $transaction,
             'debtor' => null,
-            'item_count' => count($items),
+            'item_count' => \count($items),
             'items' => $items,
         ])->EShopTransactionUpdateResult;
     }
@@ -242,7 +233,7 @@ class Client
     /**
      * @throws SoapException
      */
-    public function getInvoice(string $transaction_ref, DateTime $order_timestamp, string $ReportType, Merchant $merchant = null): InvoiceStatus
+    public function getInvoice(string $transaction_ref, DateTime $order_timestamp, string $ReportType, Merchant|null $merchant = null): InvoiceStatus
     {
         if (null === $merchant && null === $this->merchant) {
             throw new \LogicException('Either pass merchant to the constructor or to '.__METHOD__);
@@ -259,7 +250,7 @@ class Client
     /**
      * Returns the merchant that was passed to the constructor (if any).
      */
-    public function getMerchant(): ?Merchant
+    public function getMerchant(): Merchant|null
     {
         return $this->merchant;
     }
